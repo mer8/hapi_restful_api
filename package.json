@@ -18,5 +18,9 @@
   "bugs": {
     "url": "https://github.com/mer8/hapi_restful_api/issues"
   },
-  "homepage": "https://github.com/mer8/hapi_restful_api"
+  "homepage": "https://github.com/mer8/hapi_restful_api",
+  "dependencies": {
+    "hapi": "^8.1.0",
+    "joi": "^5.1.0"
+  }
 }
