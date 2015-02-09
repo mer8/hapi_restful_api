@@ -7,12 +7,12 @@ server.connection({
     port: 8000
 });
  
-// Declare plugins
+// These are our
 var plugins = [
     { register: require('./routes/animals.js') }
 ];
  
-// Register plugins, and start the server if none of them fail
+
 server.register(plugins, function (err) {
     if (err) { throw err; }
  
