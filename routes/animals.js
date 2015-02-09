@@ -1,35 +1,59 @@
+
+var Hapi = require('hapi');
+var Joi = require('joi');
+
 // Options can be passed to plugins on registration
 exports.register = function(server, options, next) {
     // This is our storage of animals
     var animals = [
     {
-        name: 'Cat',
-        sound: 'meow!'
-    },
-    {
-        name: 'Dog',
-        sound: 'woof!'
+        name: 'Cat'
+    ,   sound: 'meow!'
+    }
+,   {
+        name: 'Dog'
+    ,   sound: 'woof!'
     }
     ];
 
+
+// Declaring routes here
     server.route([
         {
-            method: 'GET',
-            path: '/animals',
-            handler: function (request, reply) {
+            method: 'GET'
+        ,   path: '/animals'
+        ,   handler: function (request, reply) {
                 // Return all of our animals
                 reply(animals);
             }
+        }
+        ,   // Let's GET a random animal
+        {
+            method: 'GET'
+        ,   path: '/random'
+        ,   handler: function (request, reply) {
+                var id = Math.floor(Math.random() * animals.length);
+                reply(animals[id]);
+            }
         },
         {
-            method: 'POST',
-            path: '/animals',
-            handler: function (request, reply) {
-                // Get an animal
-                var animal = request.payload.animal;
-                // Now we're storing the animal
-                var key = animals.push(animal);
-                reply({key: key - 1, animal: animal});
+            method: 'POST'
+        ,   path: '/animals'
+        ,   config: {
+                handler: function(request, reply) {
+                    var newAnimal = {
+                        name: request.payload.name
+                    ,   sound: request.payload.sound
+                    };
+                    animals.push(newAnimal);
+                    reply(newAnimal);
+                }
+            ,   validate: {
+                    payload: {
+                        name: Joi.string().required()
+                    ,   sound: Joi.string().required()
+                    }
+                }
             }
         }
     ]);
