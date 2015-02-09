@@ -7,7 +7,7 @@ server.connection({
     port: 8000
 });
  
-// These are our
+// This is where we delcare our plugins
 var plugins = [
     { register: require('./routes/animals.js') }
 ];
