@@ -47,17 +47,16 @@ exports.register = function(server, options, next) {
         ,   path: '/animals'
         ,   config: {
                 handler: function(request, reply) {
-                    var newAnimal = {
-                        name: request.payload.name
-                    ,   sound: request.payload.sound
-                    };
+                    var newAnimal = request.payload.animal;
                     animals.push(newAnimal);
                     reply(newAnimal);
                 }
             ,   validate: {
                     payload: {
-                        name: Joi.string().required()
-                    ,   sound: Joi.string().required()
+                        animal: {
+                          name: Joi.string().required()
+                      ,   sound: Joi.string().required()
+                        }
                     }
                 }
             }
